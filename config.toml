@@ -1,0 +1,31 @@
+# ROCK 5B 系统状态屏配置
+
+[display]
+# I2C 总线号：填数字（如 8），或 "auto" 自动扫描所有总线
+# 推荐接线 I2C8_M4 -> 排针 引脚7=SDA / 引脚32=SCL
+bus = "auto"
+# 屏幕地址："auto" 会自动尝试 0x3C 和 0x3D
+address = "auto"
+contrast = 128          # 亮度 0-255
+rotate = 0              # 0 或 180（屏幕装反时用 180）
+invert = false          # true 则黑白反转
+# 依次显示的页面，可自由增删排序
+pages = ["overview", "thermal", "network"]
+page_interval = 5       # 每页停留秒数
+
+[app]
+title = "ROCK 5B"       # 顶栏标题
+interval = 1.0          # 数据刷新间隔（秒）
+# 顶栏温度取自哪个传感器：soc / max / bigcore0 / bigcore1 / littlecore / gpu / npu
+temp_source = "soc"
+
+[network]
+# 留空 = 自动列出所有已配置 IPv4 的网卡；填了则只显示列出的这些
+interfaces = []
+# 隐藏 docker0 / br- / veth 这类容器虚拟网卡，避免刷屏
+hide_virtual = true
+# 网卡显示别名，未列出的用原始名字
+[network.aliases]
+enP4p65s0 = "ETH"
+wlP2p33s0 = "WLAN"
+docker0 = "DOCKER"

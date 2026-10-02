@@ -1,0 +1,13 @@
+# 虚拟环境（依赖由 requirements.txt 声明，不入库）
+.venv/
+venv/
+
+# Python 字节码缓存
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 本地临时文件
+*.log
+*.tmp
+.DS_Store

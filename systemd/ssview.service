@@ -1,0 +1,29 @@
+[Unit]
+Description=ROCK 5B 系统状态 OLED 显示 (SSD1306)
+Documentation=file:/home/radxa/Applications/SystemStatusView/README.md
+# 等 I2C 设备就绪再启动
+After=local-fs.target
+Wants=local-fs.target
+
+[Service]
+Type=simple
+User=radxa
+Group=i2c
+WorkingDirectory=/home/radxa/Applications/SystemStatusView
+ExecStart=/home/radxa/Applications/SystemStatusView/.venv/bin/python \
+          /home/radxa/Applications/SystemStatusView/main.py
+
+# 屏幕没接好时不要疯狂重启，等 30 秒再试
+Restart=on-failure
+RestartSec=30
+
+# 日志走 journald，用 journalctl -u ssview -f 查看
+StandardOutput=journal
+StandardError=journal
+
+# 只读系统信息 + 写 I2C，不需要额外提权
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
